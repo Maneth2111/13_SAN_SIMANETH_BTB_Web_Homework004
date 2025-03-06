@@ -12,7 +12,6 @@ export default function AddNewProjectComponent() {
       >
         <Plus size={22} /> <span className="text-base">New Project</span>
       </button>
-
       <div
         id="crud-modal"
         tabIndex="-1"

@@ -42,7 +42,6 @@ export default function CardComponent() {
             title="75%"
           ></div>
         </div>
-
         {/* deadline */}
         <div className="flex justify-end">
           <p className="font-medium bg-light-gray py-1.5 px-4 rounded-lg max-w-28 text-center">
