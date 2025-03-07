@@ -15,17 +15,22 @@ export default function LearningMaterialsComponent() {
       )
     );
   };
-
   // Sorting Function
   const sortedMaterials = [...materials].sort((a, b) => {
     if (sortOrder === "A-Z") return a.title.localeCompare(b.title);
     if (sortOrder === "Z-A") return b.title.localeCompare(a.title);
-    return 0; // No sorting by default
+    return 0;
   });
+
+  // CONVERT DATE = "Day, Month Date, Year"
+  const formatDate = (dateString) => {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
     <div className="bg-white drop-shadow-lg w-full rounded-2xl overflow-auto h-[80vh]">
-      {/* Filter Component with Sort Handler */}
+      {/* FILTER  */}
       <FilterComponent setSortOrder={setSortOrder} />
 
       {/* Title */}
@@ -56,7 +61,7 @@ export default function LearningMaterialsComponent() {
                   onClick={() => toggleFavorite(material.id)}
                 />
               </div>
-              <p className="text-gray-400 text-sm">Posted at: {material.postedAt}</p>
+              <p className="text-gray-400 text-sm">Posted at: {formatDate(material.postedAt)}</p>
             </div>
           </div>
         ))}

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function FilterComponent({ setSortOrder }) {
   const handleSortChange = (e) => {
-    setSortOrder(e.target.value); // Update sorting order in parent component
+    setSortOrder(e.target.value); 
   };
 
   return (

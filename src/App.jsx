@@ -1,20 +1,27 @@
 import "./App.css";
-import FilterComponent from "./components/FilterComponent";
 import SidebarComponent from "./components/SidebarComponent";
 import TopNavbarComponent from "./components/TopNavbarComponent";
 import DashboardComponent from "./components/DashboardComponent";
 import LearningMaterialsComponent from "./components/LearningMaterialsComponent";
-import CardComponent from "./components/CardComponent";
 import AssignmentsComponent from "./components/AssignmentsComponent";
 import AddNewProjectComponent from "./components/AddNewProjectComponent";
 import React, { useState } from "react";
 
 function App() {
   const [projects, setProjects] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
 
-  // Function to handle adding new projects
   const handleAddProject = (newProject) => {
-    setProjects([...projects, newProject]);
+    setProjects((prevProjects) => [...prevProjects, newProject]);
+    setFilteredProjects((prevProjects) => [...prevProjects, newProject]);
+  };
+
+  const handleSearch = (searchTerm) => {
+    const lowerCaseTerm = searchTerm.toLowerCase();
+    const filtered = projects.filter((project) =>
+      project.name.toLowerCase().includes(lowerCaseTerm)
+    );
+    setFilteredProjects(filtered);
   };
 
   return (
@@ -24,20 +31,22 @@ function App() {
           <SidebarComponent />
         </aside>
         <main className="min-h-svh col-span-10 flex flex-col bg-gray-300">
-          <TopNavbarComponent />
-          <div className="flex">
-            <section className="flex col-span-7 w-9/12 h-full">
+          <TopNavbarComponent onSearch={handleSearch} />
+          <div className="flex justify-between ">
+            <section className="flex col-span-7 w-8/12 h-full">
               <section>
                 <DashboardComponent />
-                <div className="flex justify-between mt-10">
-                  {/* Pass handleAddProject to AddNewProjectComponent */}
-                  <AssignmentsComponent projects={projects} />
+                <div className="flex justify-between mb-4 mt-10">
+                  <h1 className="text-xl font-semibold">Assignments</h1>
                   <AddNewProjectComponent onAddProject={handleAddProject} />
+                </div>
+                <div className="flex justify-between overflow-auto h-[60vh]">
+                  <AssignmentsComponent projects={filteredProjects} />   
                 </div>
               </section>
             </section>
-            {/* Learning Material */}
-            <div className="w-3/12">
+            {/* LEARNING MATERIAL */}
+            <div className="w-3.5/12 mt-5">
               <LearningMaterialsComponent />
             </div>
           </div>
